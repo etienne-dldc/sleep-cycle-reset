@@ -18,10 +18,7 @@ const config: Config = {
   state,
   effects,
   reactions,
-  onInitialize: (a: any) => {
-    console.log(a);
-    return actions.restoreConfig(a);
-  },
+  onInitialize: actions.restoreConfig,
 };
 
 declare module 'overmind' {
