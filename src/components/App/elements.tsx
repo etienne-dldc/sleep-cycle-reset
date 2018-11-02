@@ -1,5 +1,14 @@
 import styled from 'react-emotion';
-import { Colors } from '@blueprintjs/core';
+import { Colors, H1 } from '@blueprintjs/core';
+
+export const Title = styled(H1)({
+  fontWeight: 100,
+});
+
+export const Header = styled('header')({
+  padding: '1rem',
+  paddingTop: '3rem',
+});
 
 export const Wrapper = styled('div')({
   display: 'flex',

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Wrapper, Column, Columns, PopoverContainer } from './elements';
+import { Wrapper, Column, Columns, PopoverContainer, Footer, Link, Header, Title } from './elements';
 import { ConnectProps, connect } from '../../logic';
-import { Card, Classes, FormGroup, Popover, Button, Slider, MenuItem, H4, Callout } from '@blueprintjs/core';
+import { Card, Classes, FormGroup, Popover, Button, Slider, MenuItem, H4, Callout, Icon } from '@blueprintjs/core';
 import padLeft from '../../utils/padLeft';
 import { Select, ItemRenderer } from '@blueprintjs/select';
 import { Weekday, allWeekdays } from '../../logic/state';
@@ -23,6 +23,11 @@ class App extends React.PureComponent<Props> {
     const { app } = this.props;
     return (
       <Wrapper className={Classes.DARK}>
+        <Header>
+          <Title>
+            Sleep Cycle Reset &nbsp; <Icon icon="refresh" iconSize={25} />
+          </Title>
+        </Header>
         <Columns>
           <Column>
             <Card>
@@ -33,15 +38,15 @@ class App extends React.PureComponent<Props> {
                   itemRenderer={renderWeekday}
                   onItemSelect={selected => app.actions.setWeekday(selected)}
                 >
-                  <Button rightIcon="double-caret-vertical">{displayWeekday(app.state.startWeekday)}</Button>
+                  <Button rightIcon="double-caret-vertical">{displayWeekday(app.state.config.startWeekday)}</Button>
                 </WeekdaySelect>
               </FormGroup>
               <FormGroup inline={true} label="At what time did you woke up today ?">
                 <Popover>
-                  <Button>{displayHour(app.state.startHour)}</Button>
+                  <Button>{displayHour(app.state.config.startHour)}</Button>
                   <PopoverContainer>
                     <Slider
-                      value={app.state.startHour}
+                      value={app.state.config.startHour}
                       min={0}
                       max={23}
                       onChange={app.actions.setStartHour}
@@ -52,18 +57,24 @@ class App extends React.PureComponent<Props> {
               </FormGroup>
               <FormGroup inline={true} label="How many days do you have ?">
                 <Popover>
-                  <Button>{app.state.days} days</Button>
+                  <Button>{app.state.config.days} days</Button>
                   <PopoverContainer>
-                    <Slider value={app.state.days} min={3} max={16} onChange={app.actions.setDays} labelStepSize={3} />
+                    <Slider
+                      value={app.state.config.days}
+                      min={3}
+                      max={16}
+                      onChange={app.actions.setDays}
+                      labelStepSize={3}
+                    />
                   </PopoverContainer>
                 </Popover>
               </FormGroup>
               <FormGroup inline={true} label={`At what time do you have to wake up ${app.state.endWeekday}`}>
                 <Popover>
-                  <Button>{displayHour(app.state.endHour)}</Button>
+                  <Button>{displayHour(app.state.config.endHour)}</Button>
                   <PopoverContainer>
                     <Slider
-                      value={app.state.endHour}
+                      value={app.state.config.endHour}
                       min={0}
                       max={23}
                       onChange={app.actions.setEndHour}
@@ -74,10 +85,10 @@ class App extends React.PureComponent<Props> {
               </FormGroup>
               <FormGroup inline={true} label="For how long can you sleep ?">
                 <Popover>
-                  <Button>{app.state.sleepTime} hours</Button>
+                  <Button>{app.state.config.sleepTime} hours</Button>
                   <PopoverContainer>
                     <Slider
-                      value={app.state.sleepTime}
+                      value={app.state.config.sleepTime}
                       min={5}
                       max={16}
                       onChange={app.actions.setSleepTime}
@@ -87,16 +98,16 @@ class App extends React.PureComponent<Props> {
                 </Popover>
               </FormGroup>
             </Card>
-            {app.state.endHour > app.state.startHour && (
+            {app.state.config.endHour > app.state.config.startHour && (
               <Card>
                 <Callout intent="primary">Are you sure ?</Callout>
               </Card>
             )}
-            {app.state.dayLength - app.state.sleepTime > 20 && (
+            {app.state.dayLength - app.state.config.sleepTime > 20 && (
               <Card>
                 <Callout intent="primary">
-                  To succeed you have to stay up more than {Math.floor(app.state.dayLength - app.state.sleepTime)} hours
-                  each days
+                  To succeed you have to stay up more than{' '}
+                  {Math.floor(app.state.dayLength - app.state.config.sleepTime)} hours each days
                 </Callout>
               </Card>
             )}
@@ -123,6 +134,15 @@ class App extends React.PureComponent<Props> {
             </Card>
           </Column>
         </Columns>
+        <Footer>
+          Made with <Icon icon="code" iconSize={15} /> by{' '}
+          <Link href="https://twitter.com/Etienne_dot_js">@Etienne_dot_js</Link>
+          {' - '}
+          Code available on{' '}
+          <Link href="https://github.com/etienne-dldc/sleep-cycle-reset">
+            <Icon icon="git-repo" iconSize={15} /> Github
+          </Link>
+        </Footer>
       </Wrapper>
     );
   }

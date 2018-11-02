@@ -2,18 +2,26 @@ import { TConnect, createConnect } from 'overmind-react';
 import { Overmind, TApp } from 'overmind';
 import * as effects from './effects';
 import * as actions from './actions';
+import * as reactions from './reactions';
 import state from './state';
 
 type Config = {
   state: typeof state;
   actions: typeof actions;
+  reactions: typeof reactions;
   effects: typeof effects;
+  onInitialize: any;
 };
 
 const config: Config = {
   actions,
   state,
   effects,
+  reactions,
+  onInitialize: (a: any) => {
+    console.log(a);
+    return actions.restoreConfig(a);
+  },
 };
 
 declare module 'overmind' {

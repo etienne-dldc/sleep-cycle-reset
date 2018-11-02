@@ -30,13 +30,16 @@ export const allWeekdays = [
 
 type PlanningItem = { day: Weekday; hour: number; duration: number };
 
-export type State = {
-  demo: boolean;
+export type Config = {
   startHour: number;
   startWeekday: Weekday;
   endHour: number;
   days: number;
   sleepTime: number;
+};
+
+export type State = {
+  config: Config;
   endWeekday: Derive<Weekday>;
   dayLength: Derive<number>;
   wakeUpDiff: Derive<number>;
@@ -45,34 +48,35 @@ export type State = {
 };
 
 const state: State = {
-  demo: true,
-  startWeekday: Weekday.Thursday,
-  startHour: 17,
-  endHour: 8,
-  days: 4,
-  sleepTime: 12,
+  config: {
+    startWeekday: Weekday.Thursday,
+    startHour: 17,
+    endHour: 8,
+    days: 4,
+    sleepTime: 12,
+  },
   endWeekday: state => {
-    const startDayIndex = allWeekdays.indexOf(state.startWeekday);
-    const endDayIndex = (startDayIndex + state.days) % allWeekdays.length;
+    const startDayIndex = allWeekdays.indexOf(state.config.startWeekday);
+    const endDayIndex = (startDayIndex + state.config.days) % allWeekdays.length;
     return allWeekdays[endDayIndex];
   },
   wakeUpDiff: state => {
-    return state.endHour + 24 - state.startHour;
+    return state.config.endHour + 24 - state.config.startHour;
   },
-  totalHours: state => 24 - state.startHour + (state.days - 1) * 24 + state.endHour,
-  dayLength: state => state.totalHours / (state.days - 1),
+  totalHours: state => 24 - state.config.startHour + (state.config.days - 1) * 24 + state.config.endHour,
+  dayLength: state => state.totalHours / (state.config.days - 1),
   planning: state => {
-    const startDayIndex = allWeekdays.indexOf(state.startWeekday);
-    const numOfNights = state.days - 1;
+    const startDayIndex = allWeekdays.indexOf(state.config.startWeekday);
+    const numOfNights = state.config.days - 1;
     const extendedDayLength = Math.floor(state.totalHours / numOfNights);
     const longerDays = state.totalHours - extendedDayLength * numOfNights;
-    let acc = state.startHour;
+    let acc = state.config.startHour;
     return new Array(numOfNights).fill(null).map((_, index) => {
       const dayLength = extendedDayLength + (index < longerDays ? 1 : 0);
       acc += dayLength;
       const upHour = acc;
-      const downHour = upHour - state.sleepTime;
-      const upLength = dayLength - state.sleepTime;
+      const downHour = upHour - state.config.sleepTime;
+      const upLength = dayLength - state.config.sleepTime;
       const upDayIndex = (startDayIndex + Math.floor(upHour / 24)) % allWeekdays.length;
       const downDayIndex = (startDayIndex + Math.floor(downHour / 24)) % allWeekdays.length;
 
@@ -85,7 +89,7 @@ const state: State = {
         down: {
           hour: downHour % 24,
           day: allWeekdays[downDayIndex],
-          duration: state.sleepTime,
+          duration: state.config.sleepTime,
         },
       };
     });
