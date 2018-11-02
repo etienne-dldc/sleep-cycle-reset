@@ -10,7 +10,7 @@ type Config = {
   actions: typeof actions;
   reactions: typeof reactions;
   effects: typeof effects;
-  onInitialize: any;
+  onInitialize?: any;
 };
 
 const config: Config = {

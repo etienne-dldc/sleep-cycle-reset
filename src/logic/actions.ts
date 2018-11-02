@@ -8,7 +8,7 @@ export const saveConfig: Action = ({ debounce }) => debounce(500).run(operations
 
 export const restoreConfig: Action = ({ map }) =>
   map(operations.restoreFromStore)
-    .filter(v => v !== undefined)
+    .filter(({ value }) => value !== undefined && value !== null)
     .map(({ value }) => value as Config)
     .mutate(mutations.setConfig);
 
