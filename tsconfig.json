@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "allowJs": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -12,9 +12,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "rootDir": "src",
+    "lib": ["es6", "dom"]
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
