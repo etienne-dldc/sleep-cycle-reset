@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Wrapper,
   Column,
@@ -45,11 +45,11 @@ export const allWeekdays = [
   Weekday.Sunday,
 ];
 
-export const restore = (): Config | undefined => {
+const restore = (): Config | undefined => {
   return store.get("config");
 };
 
-export const save = (config: Config) => {
+const save = (config: Config) => {
   store.set("config", config);
 };
 
@@ -94,6 +94,10 @@ export const App: React.FC<{}> = () => {
   const [config, setConfig] = useState<Config>(() => {
     return restore() ?? DEFAULT_CONFIG;
   });
+
+  useEffect(() => {
+    save(config);
+  }, [config]);
 
   const setStartWeekday = useCallback(
     (startWeekday) => setConfig((prev) => ({ ...prev, startWeekday })),
