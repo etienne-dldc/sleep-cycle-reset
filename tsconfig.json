@@ -12,10 +12,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
-    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "jsx": "react-jsx",
     "rootDir": "src",
-    "lib": ["es6", "dom"]
+    "lib": ["es6", "dom"],
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src"]
 }

@@ -1,15 +1,13 @@
-import 'normalize.css';
-import '@blueprintjs/icons/lib/css/blueprint-icons.css';
-import '@blueprintjs/core/lib/css/blueprint.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import { injectGlobal } from "@emotion/css";
+import { Colors } from "@blueprintjs/core";
+import { App } from "./components/App";
 
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { injectGlobal } from 'emotion';
-import { Colors } from '@blueprintjs/core';
+import "normalize.css";
+import "@blueprintjs/icons/lib/css/blueprint-icons.css";
+import "@blueprintjs/core/lib/css/blueprint.css";
 
-import App from './components/App';
-
-// tslint:disable-next-line:no-unused-expression
 injectGlobal`
 html,
 body {
@@ -50,4 +48,4 @@ body {
 }
 `;
 
-ReactDOM.render(<App />, document.getElementById('root') as HTMLElement);
+ReactDOM.render(<App />, document.getElementById("root") as HTMLElement);
