@@ -39,5 +39,8 @@
   },
   "resolutions": {
     "immer": "8.0.1"
+  },
+  "devDependencies": {
+    "caprover": "^2.2.3"
   }
 }
