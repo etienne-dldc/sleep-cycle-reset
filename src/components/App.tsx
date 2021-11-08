@@ -133,10 +133,10 @@ export const App: React.FC<{}> = () => {
     [config.days, config.endHour, config.startHour]
   );
 
-  const dayLength = useMemo(() => totalHours / numberOfNights, [
-    numberOfNights,
-    totalHours,
-  ]);
+  const dayLength = useMemo(
+    () => totalHours / numberOfNights,
+    [numberOfNights, totalHours]
+  );
 
   const planning = useMemo(() => {
     const startDayIndex = allWeekdays.indexOf(config.startWeekday);
@@ -299,7 +299,7 @@ export const App: React.FC<{}> = () => {
       </Columns>
       <Footer>
         Made with <Icon icon="code" iconSize={15} /> by{" "}
-        <Link href="https://twitter.com/Etienne_dot_js">@Etienne_dot_js</Link>
+        <Link href="https://dldc.dev/twitter">@EtienneTech</Link>
         {" - "}
         Code available on{" "}
         <Link href="https://github.com/etienne-dldc/sleep-cycle-reset">
